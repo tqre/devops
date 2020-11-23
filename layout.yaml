@@ -1,0 +1,18 @@
+session_name: DevOps
+environment:
+  VAR: variable
+start_directory: /home/devops
+windows:
+- window_name: main
+  layout: main-vertical
+  panes:
+    -
+    -
+    -
+- window_name: second
+  layout: main-vertical
+  panes:
+    -
+    -
+    -
+
