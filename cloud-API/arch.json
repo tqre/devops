@@ -1,0 +1,44 @@
+{
+  "server": {
+    "boot_order": "cdrom,disk",
+    "zone": "fi-hel1",
+    "title": "test",
+    "hostname": "test",
+    "plan": "1xCPU-1GB",
+    "remote_access_enabled": "no",
+    "remote_access_password": "",
+    "storage_devices": {
+      "storage_device": [
+        {
+          "type": "cdrom",
+          "action": "attach",
+          "storage": "01000000-0000-4000-8000-000070030101"
+        },
+        {
+          "action": "create",
+          "size": "25",
+          "title": "Build server HD",
+          "tier": "maxiops"
+        }
+      ]
+    },
+    "networking" : {
+      "interfaces" : {
+        "interface" : [
+          {
+            "index" : 1,
+            "ip_addresses" : {
+              "ip_address" : [
+                {
+                  "family" : "IPv4"
+                }
+              ]
+            },
+            "type" : "public",
+            "bootable": "no"
+          }
+        ]
+      }
+    }
+  }
+}
