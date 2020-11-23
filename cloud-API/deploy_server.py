@@ -27,9 +27,10 @@ def main():
     vnc_client.cmd('pacman -S archlinux-keyring --noconfirm')
 
     # Download the bootstrap script and run it
-    vnc_client.cmd('curl raw.githubusercontent.com/tqre/devops/main/README.md --output bootstrap.sh')
+    vnc_client.cmd('curl raw.githubusercontent.com/tqre/devops/main/install/bootstrap.sh --output bootstrap.sh')
     vnc_client.cmd('chmod 777 bootstrap.sh')
     vnc_client.cmd('./bootstrap.sh')
+
 
 class UpCloudAPIConnection:
 
@@ -113,7 +114,7 @@ class VNCConnection:
         self.connection = vncapi.connect(self.address, password=self.passwd)
         self.connection.keyPress('enter')
         print("Waiting for the installation ISO to boot...")
-        self.connection.expectScreen('pics/booted_install_ISO.png')
+        self.connection.expectScreen('booted_install_ISO.png')
 
     def cmd(self, string):
         print('# ' + string)
