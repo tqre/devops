@@ -5,8 +5,7 @@
     "title": "test",
     "hostname": "test",
     "plan": "1xCPU-1GB",
-    "remote_access_enabled": "no",
-    "remote_access_password": "",
+    "remote_access_enabled": "yes",
     "storage_devices": {
       "storage_device": [
         {
@@ -17,7 +16,7 @@
         {
           "action": "create",
           "size": "25",
-          "title": "Build server HD",
+          "title": "server HD",
           "tier": "maxiops"
         }
       ]

@@ -14,11 +14,22 @@ def main():
     # Deploy the server and save it as a Server object
     data = json.loads(upcloud.do('POST', '/server', server_specs))
     server = Server(data, upcloud)
-    print('Server uuid: ' + server.uuid)
     print('Server public IP address: ' + server.ip)
-
     server.wait_until('started')
 
+    # Send commands to server with vnc connection
+    vnc_client = VNCConnection(server)
+    print("Sending commands via VNC connection:")
+
+    # Update package repositories and pacman keyring
+    # NOTE: the colon ':' and plus-sign '+' are NOT usable with the connection
+    vnc_client.cmd('pacman -Sy')
+    vnc_client.cmd('pacman -S archlinux-keyring --noconfirm')
+
+    # Download the bootstrap script and run it
+    vnc_client.cmd('curl raw.githubusercontent.com/tqre/devops/main/README.md --output bootstrap.sh')
+    vnc_client.cmd('chmod 777 bootstrap.sh')
+    vnc_client.cmd('./bootstrap.sh')
 
 class UpCloudAPIConnection:
 
@@ -27,9 +38,9 @@ class UpCloudAPIConnection:
         self.version = "/1.3"
         print("Connecting to " + self.address + "...")
 
-        # TODO: read secrets from another place: define place in environment?
         with open('secrets', 'rb') as creds:
             self.credentials = creds.read()
+
         self.test_credentials()
 
     def conn(self, httpreq, url, body=None):
@@ -52,7 +63,7 @@ class UpCloudAPIConnection:
         return self.conn(httpreq, url, body).read().decode(encoding="UTF-8")
 
 
-# Servers are associated with a connection when created now
+# Servers are associated with a connection when created
 class Server:
     def __init__(self, data, connection):
         self.data = data
@@ -101,9 +112,11 @@ class VNCConnection:
         self.passwd = server.vnc_passwd
         self.connection = vncapi.connect(self.address, password=self.passwd)
         self.connection.keyPress('enter')
-        #self.connection.expectScreen('pics/booted_install_ISO.png')
+        print("Waiting for the installation ISO to boot...")
+        self.connection.expectScreen('pics/booted_install_ISO.png')
 
     def cmd(self, string):
+        print('# ' + string)
         for char in string:
             self.connection.keyPress(char)
             sleep(.2)
