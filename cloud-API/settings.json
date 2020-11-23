@@ -1,0 +1,6 @@
+{
+  "server" : {
+    "boot_order": "disk",
+    "remote_access_enabled": "no"
+  }
+}

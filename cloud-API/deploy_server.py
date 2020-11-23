@@ -14,7 +14,6 @@ def main():
     # Deploy the server and save it as a Server object
     data = json.loads(upcloud.do('POST', '/server', server_specs))
     server = Server(data, upcloud)
-    print('Server public IP address: ' + server.ip)
     server.wait_until('started')
 
     # Send commands to server with vnc connection
@@ -26,15 +25,28 @@ def main():
     vnc_client.cmd('pacman -Sy')
     vnc_client.cmd('pacman -S archlinux-keyring --noconfirm')
 
-    # Read the administrator password from a file
+    # Read the administrator password from a file, don't echo it to console
     with open('../install/secrets', 'r') as file:
         passwd = file.read()
-    vnc_client.cmd('export PASSWD=' + passwd)
+    vnc_client.cmd('export PASSWD=' + passwd, False)
 
     # Download the bootstrap script and run it
-    vnc_client.cmd('curl raw.githubusercontent.com/tqre/devops/main/install/bootstrap.sh --output bootstrap.sh')
+    vnc_client.cmd('wget raw.githubusercontent.com/tqre/devops/main/install/bootstrap.sh')
     vnc_client.cmd('chmod 777 bootstrap.sh')
     vnc_client.cmd('./bootstrap.sh')
+    print('Running the bootstrap script, shutting down the server when completed.')
+    server.wait_until('stopped')
+
+    # Change the server settings to boot from HD and restart
+    # TODO: remove CD-rom virtual device also?
+    print('Disabling VNC connection and setting server to boot from hard drive')
+    with open('settings.json', 'r') as settings:
+        upcloud.do('PUT', '/server/' + server.uuid, settings)
+    print("Restarting server...")
+    upcloud.do('POST', '/server/' + server.uuid + '/start')
+    server.wait_until('started')
+    print('Server is now ready to be configured further.')
+    print('Server public IP address: ' + server.ip)
 
 
 class UpCloudAPIConnection:

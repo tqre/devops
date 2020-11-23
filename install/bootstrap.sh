@@ -82,4 +82,4 @@ EOF
 echo -e "nameserver 94.237.127.9\nnameserver 94.237.40.9" > /mnt/etc/resolv.conf
 echo "Server = http://arch.mirror.far.fi/\$repo/os/\$arch" > /mnt/etc/pacman.d/mirrorlist
 
-#poweroff
+poweroff
