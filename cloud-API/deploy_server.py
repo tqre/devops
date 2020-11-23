@@ -26,6 +26,11 @@ def main():
     vnc_client.cmd('pacman -Sy')
     vnc_client.cmd('pacman -S archlinux-keyring --noconfirm')
 
+    # Read the administrator password from a file
+    with open('../install/secrets', 'r') as file:
+        passwd = file.read()
+    vnc_client.cmd('export PASSWD=' + passwd)
+
     # Download the bootstrap script and run it
     vnc_client.cmd('curl raw.githubusercontent.com/tqre/devops/main/install/bootstrap.sh --output bootstrap.sh')
     vnc_client.cmd('chmod 777 bootstrap.sh')
@@ -116,8 +121,9 @@ class VNCConnection:
         print("Waiting for the installation ISO to boot...")
         self.connection.expectScreen('booted_install_ISO.png')
 
-    def cmd(self, string):
-        print('# ' + string)
+    def cmd(self, string, echo=True):
+        if echo:
+            print('# ' + string)
         for char in string:
             self.connection.keyPress(char)
             sleep(.2)
