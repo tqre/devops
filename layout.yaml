@@ -3,16 +3,16 @@ environment:
   VAR: variable
 start_directory: /home/devops
 windows:
-- window_name: main
+- window_name: ansible
   layout: main-vertical
   panes:
+    - nano ansible/ansible.cfg
+    - 
     -
-    -
-    -
-- window_name: second
+- window_name: gitlab
   layout: main-vertical
   panes:
-    -
-    -
+    - nano /home/devops/cloud-API/arch.json
+    - 
     -
 
