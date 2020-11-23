@@ -65,7 +65,6 @@ echo -e "$PASSWORD\n$PASSWORD" | passwd $USERNAME
 runuser $USERNAME -c 'mkdir ~/.ssh'
 runuser $USERNAME -c 'echo $SSH_PUB_KEY > ~/.ssh/authorized_keys'
 sed -i "s/#Port 22/Port $SSH_PORT/" /etc/ssh/sshd_config
-sed -i 's/Subsystem/#Subsystem/' /etc/ssh/sshd_config
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 sed -i '/#PermitRootLogin pro/c\PermitRootLogin no' /etc/ssh/sshd_config
 systemctl enable sshd
