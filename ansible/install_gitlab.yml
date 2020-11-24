@@ -19,16 +19,17 @@
       name: nginx-mainline
       state: latest
 
+  - name: Install gitlab
+    pacman:
+      name: gitlab
+      state: latest
+
   - name: Initialize database cluster
     command: initdb -D /var/lib/postgres/data
     become_method: sudo
     become_user: postgres
     args:
       creates: /var/lib/postgres/data/PG_VERSION
-
-# command: initdb -D /var/lib/postgres/data
-# run as: postgres
-# creates: use PG_VERSION -file
 
 # start and enable the services:
 # postgresql, redis, nginx
