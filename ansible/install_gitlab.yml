@@ -1,4 +1,4 @@
-- name: Install GitLab
+- name: Install a native GitLab instance
   hosts: gitlab
   become: yes
   become_method: sudo
@@ -26,13 +26,26 @@
       enabled: yes
       state: started
 
-  - name: Start and enable redis service
+# create gitlabhq_production db + user
+# seed /etc/webapps/gitlab/database.yml with user+password
+
+  - name: Start and enable redis cache database service
     service:
       name: redis
       enabled: yes
       state: started
 
-# start and enable the services:
-# postgresql, redis, nginx
+# redis configuration to use sockets instead of TCP /etc/redis.conf
+# add gitlab user to redis group
+# then update /etc/webapps/gitlab/resque.yml to use sockets
 
-# configuration files
+# configuration file for gitlab: /etc/webapps/gitlab/gitlab.yml
+
+# set up secrets: /etc/webapps/gitlab{,-shell}/secret
+#                 /etc/webapps/gitlab/secrets.yml
+
+# start gitlab-gitaly.service
+
+# initialize GitLab db
+
+# set up webserver: nginx
