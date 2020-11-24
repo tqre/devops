@@ -9,8 +9,21 @@
       name: postgresql
       state: latest
 
+  - name: Install redis server
+    pacman:
+      name: redis
+      state: latest
+
+  - name: Install nginx
+    pacman:
+      name: nginx-mainline
+      state: latest
+
 # command: initdb -D /var/lib/postgres/data
 # run as: postgres
 # creates: use PG_VERSION -file
 
-# start and enable the service
+# start and enable the services:
+# postgresql, redis, nginx
+
+# configuration files
