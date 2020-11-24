@@ -13,6 +13,6 @@ windows:
   layout: main-vertical
   panes:
     - nano /home/devops/cloud-API/arch.json
-    - 
+    - ssh gitlab.test
     -
 
