@@ -20,6 +20,18 @@
     args:
       creates: /var/lib/postgres/data/PG_VERSION
 
+  - name: Start and enable postgresql database service
+    service:
+      name: postgresql
+      enabled: yes
+      state: started
+
+  - name: Start and enable redis service
+    service:
+      name: redis
+      enabled: yes
+      state: started
+
 # start and enable the services:
 # postgresql, redis, nginx
 
