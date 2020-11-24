@@ -6,7 +6,7 @@ windows:
 - window_name: ansible
   layout: main-vertical
   panes:
-    - nano ansible/ansible.cfg
+    - ansible all -m ping
     - 
     -
 - window_name: gitlab
