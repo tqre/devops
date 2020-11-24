@@ -31,7 +31,7 @@ def main():
     vnc_client.cmd('export PASSWD=' + passwd, False)
 
     # Download the bootstrap script and run it
-    vnc_client.cmd('wget raw.githubusercontent.com/tqre/devops/main/install/bootstrap.sh')
+    vnc_client.cmd('wget raw.githubusercontent.com/tqre/devops/master/install/bootstrap.sh')
     vnc_client.cmd('chmod 777 bootstrap.sh')
     vnc_client.cmd('./bootstrap.sh')
     print('Running the bootstrap script, shutting down the server when completed.')
