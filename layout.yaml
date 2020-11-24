@@ -6,13 +6,13 @@ windows:
 - window_name: ansible
   layout: main-vertical
   panes:
+    - ssh gitlab.test
+    - nano ansible/install_gitlab.yml
     - ansible all -m ping
-    - 
-    -
-- window_name: gitlab
+- window_name: 2
   layout: main-vertical
   panes:
     - nano /home/devops/cloud-API/arch.json
-    - ssh gitlab.test
+    - 
     -
 

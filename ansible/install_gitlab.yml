@@ -1,0 +1,16 @@
+- name: Install native GitLab on a fresh system
+  hosts: gitlab
+  become: yes
+  become_method: sudo
+
+  tasks:
+  - name: Install postgresql database
+    pacman:
+      name: postgresql
+      state: latest
+
+# command: initdb -D /var/lib/postgres/data
+# run as: postgres
+# creates: use PG_VERSION -file
+
+# start and enable the service
