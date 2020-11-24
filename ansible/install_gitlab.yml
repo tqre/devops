@@ -6,22 +6,11 @@
   tasks:
   - name: Install postgresql database
     pacman:
-      name: postgresql
-      state: latest
-
-  - name: Install redis server
-    pacman:
-      name: redis
-      state: latest
-
-  - name: Install nginx
-    pacman:
-      name: nginx-mainline
-      state: latest
-
-  - name: Install gitlab
-    pacman:
-      name: gitlab
+      name: 
+        - postgresql
+        - redis
+        - nginx-mainline
+        - gitlab
       state: latest
 
   - name: Initialize database cluster
