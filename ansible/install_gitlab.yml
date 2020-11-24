@@ -4,10 +4,11 @@
   become_method: sudo
 
   tasks:
-  - name: Install all needed programs - postgresql, redis, nginx-mainline, gitlab
+  - name: Install all needed packages
     pacman:
       name: 
         - postgresql
+        - python-psycopg2
         - redis
         - nginx-mainline
         - gitlab
@@ -25,6 +26,16 @@
       name: postgresql
       enabled: yes
       state: started
+
+  - name: Create gitlab database
+    postgresql_db:
+      name: gitlabhq_production
+
+  - name: Create gitlab database user
+    postgresql_user:
+      db: gitlabhq_production
+      name: testuser
+      password: testuserspassword
 
 # create gitlabhq_production db + user
 # seed /etc/webapps/gitlab/database.yml with user+password

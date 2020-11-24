@@ -1,3 +1,4 @@
 /.idea/*
 /cloud-API/secrets
 /install/secrets
+/ansible/gitlab_configfiles/secrets/*
