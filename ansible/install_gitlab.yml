@@ -1,10 +1,10 @@
-- name: Install GitLab requisite programs
+- name: Install GitLab
   hosts: gitlab
   become: yes
   become_method: sudo
 
   tasks:
-  - name: Install postgresql database
+  - name: Install all needed programs - postgresql, redis, nginx-mainline, gitlab
     pacman:
       name: 
         - postgresql
@@ -13,7 +13,7 @@
         - gitlab
       state: latest
 
-  - name: Initialize database cluster
+  - name: Initialize postgresql database cluster 
     command: initdb -D /var/lib/postgres/data
     become_method: sudo
     become_user: postgres
