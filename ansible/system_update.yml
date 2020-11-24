@@ -1,0 +1,10 @@
+- name: Full system update
+  hosts: all
+  become: yes
+  become_method: sudo
+
+  tasks:
+  - name: pacman -Suy
+    pacman:
+      update_cache: yes
+      upgrade: yes

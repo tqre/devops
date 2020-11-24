@@ -1,12 +1,12 @@
 session_name: DevOps
 environment:
-  VAR: variable
+  ANSIBLE_CONFIG: ansible/ansible.cfg
 start_directory: /home/devops
 windows:
 - window_name: ansible
   layout: main-vertical
   panes:
-    - nano ansible/ansible.cfg
+    - ansible all -m ping
     - 
     -
 - window_name: gitlab
