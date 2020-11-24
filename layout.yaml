@@ -9,7 +9,7 @@ windows:
     - ssh gitlab.test
     - nano ansible/install_gitlab.yml
     - ansible all -m ping
-- window_name: 2
+- window_name: second
   layout: main-vertical
   panes:
     - nano /home/devops/cloud-API/arch.json
