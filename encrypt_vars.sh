@@ -25,7 +25,7 @@ done
 
 # Encrypt strings with ansible-vault
 for file in ${FILES[@]}; do
-  ansible-vault encrypt_string $(cat secrets/$file) --name $file >> provision/encrypted_variables.yml
+  ansible-vault encrypt_string $(<secrets/$file) --name $file >> provision/encrypted_variables.yml
 done
 
 echo "Playbook -ready encrypted variables are in provision/encrypted_variables.yml -file"
