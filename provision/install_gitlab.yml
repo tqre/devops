@@ -3,7 +3,7 @@
   become: yes
   become_method: sudo
   vars:
-   - dbadminpasswd: !vault |
+    - dbadminpasswd: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           63633233323766653963303932653266613164313666333339666631353630373263396138353638
           6362306630633237346165323038633961313734356133380a313866346437666463616464656639
@@ -11,6 +11,8 @@
           3638633364306633350a393663636533316265376165393364613134353136626638666665373637
           63396237616137393336316361653033653235626562326265643361316564306634666161313431
           3765373434646638633066313434333263336231643662306562
+  vars_files:
+    - encrypted_variables.yml
 
   tasks:
   - name: Install all needed packages
@@ -46,7 +48,7 @@
       name: admin
       password: "{{ dbadminpasswd }}"
 
-  - name: Upload /etc/webapps/gitlab/database.yml configuration file
+  - name: Upload skeleton /etc/webapps/gitlab/database.yml configuration file
     copy:
       src: config_files/database.yml
       dest: /etc/webapps/gitlab/database.yml
@@ -69,8 +71,34 @@
 
 # configuration file for gitlab: /etc/webapps/gitlab/gitlab.yml
 
-# set up secrets: /etc/webapps/gitlab{,-shell}/secret
-#                 /etc/webapps/gitlab/secrets.yml
+  - name: Create file used for auth token generation - /etc/webapps/gitlab/secret
+    lineinfile:
+      path: /etc/webapps/gitlab/secret
+      line: "{{ gitlab_secret }}"
+      create: yes
+      owner: root
+      group: gitlab
+      mode: 0640
+
+  - name: Create file used for auth token generation - /etc/webapps/gitlab-shell/secret
+    lineinfile:
+      path: /etc/webapps/gitlab-shell/secret
+      line: "{{ gitlab_shell_secret }}"
+      create: yes
+      owner: root
+      group: gitlab
+      mode: 0640
+
+  - name: Fill in secret strings to /etc/webapps/gitlab/secrets.yml
+    blockinfile:
+      path: /etc/webapps/gitlab/secrets.yml
+      create: yes
+      block: |
+        production:
+          secret_key_base: {{ secret_key_base }}
+          db_key_base: {{ db_key_base }}
+          otp_key_base: {{ otp_key_base }}
+          openid_connect_signing_key: {{ openid_connect_signing_key }}
 
 # start gitlab-gitaly.service
 
