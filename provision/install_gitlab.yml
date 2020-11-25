@@ -32,7 +32,7 @@
       name: gitlabhq_production
 
 
-# Use ansible-vault here?
+# Use provision-vault here?
   - name: Create gitlab database user
     postgresql_user:
       db: gitlabhq_production

@@ -1,18 +1,18 @@
 session_name: DevOps
 environment:
-  ANSIBLE_CONFIG: ansible/ansible.cfg
+  ANSIBLE_CONFIG: provision/ansible.cfg
 start_directory: /home/devops
 windows:
 - window_name: ansible
   layout: main-vertical
   panes:
     - ssh gitlab.test
-    - nano ansible/install_gitlab.yml
-    - ansible all -m ping
+    - nano provision/install_gitlab.yml
+    - provision all -m ping
 - window_name: second
   layout: main-vertical
   panes:
-    - nano /home/devops/cloud-API/arch.json
+    - nano /home/devops/deploy/arch.json
     - 
     -
 
