@@ -12,7 +12,7 @@ ansible vault stuff
 
 ## Process
 1. Deploy VM instance to cloud with cloud-API scripts
-- cloud-API/deploy_server.py
+- deploy/deploy_server.py
 
 2. Provision server with GitLab using ansible
-- ansible/install_gitlab.yml
+- provision/install_gitlab.yml
