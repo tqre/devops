@@ -2,7 +2,8 @@
 
 Learning ansible by making a native GitLab installation manually.
 
-ansible-playbook -K install_gitlab.yml
+Usage:
+`ansible-playbook -K install_gitlab.yml --vault-password-file ../secrets/ansible_vault`
 
 Playbooks:
 - hello world

@@ -2,6 +2,15 @@
   hosts: gitlab
   become: yes
   become_method: sudo
+  vars:
+   - dbadminpasswd: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63633233323766653963303932653266613164313666333339666631353630373263396138353638
+          6362306630633237346165323038633961313734356133380a313866346437666463616464656639
+          63393638666230323163666265653938346337613666303562323564323361326261363666633535
+          3638633364306633350a393663636533316265376165393364613134353136626638666665373637
+          63396237616137393336316361653033653235626562326265643361316564306634666161313431
+          3765373434646638633066313434333263336231643662306562
 
   tasks:
   - name: Install all needed packages
@@ -31,15 +40,22 @@
     postgresql_db:
       name: gitlabhq_production
 
-
-# Use provision-vault here?
   - name: Create gitlab database user
     postgresql_user:
       db: gitlabhq_production
-      name: testuser
-      password: testuserspassword
+      name: admin
+      password: "{{ dbadminpasswd }}"
 
-# seed /etc/webapps/gitlab/database.yml with user+password
+  - name: Upload /etc/webapps/gitlab/database.yml configuration file
+    copy:
+      src: config_files/database.yml
+      dest: /etc/webapps/gitlab/database.yml
+
+  - name: Put database password into database.yml
+    lineinfile:
+      path: /etc/webapps/gitlab/database.yml
+      regexp: "^  password: "
+      line: "  password: {{ dbadminpasswd }}"
 
   - name: Start and enable redis cache database service
     service:

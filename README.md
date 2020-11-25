@@ -7,8 +7,8 @@ DevOps and DevSecOps study infrastructure setup scripts
 The following files are used in deploy phase:  
 `secrets/cloud_creds` - Cloud API credentials  
 `secrets/sudo_passwd` - administrative password  
-
-ansible vault stuff  
+`secrets/ansible_vault` - ansible vault password file
+`se`
 
 ## Process
 1. Deploy VM instance to cloud with cloud-API scripts
