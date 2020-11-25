@@ -26,12 +26,12 @@ def main():
     vnc_client.cmd('pacman -S archlinux-keyring --noconfirm')
 
     # Read the administrator password from a file, don't echo it to console
-    with open('../install/secrets', 'r') as file:
+    with open('../secrets/gitlab_sudo', 'r') as file:
         passwd = file.read()
     vnc_client.cmd('export PASSWD=' + passwd, False)
 
     # Download the bootstrap script and run it
-    vnc_client.cmd('wget raw.githubusercontent.com/tqre/devops/master/install/bootstrap.sh')
+    vnc_client.cmd('wget raw.githubusercontent.com/tqre/devops/master/cloud-API/bootstrap.sh')
     vnc_client.cmd('chmod 777 bootstrap.sh')
     vnc_client.cmd('./bootstrap.sh')
     print('Running the bootstrap script, shutting down the server when completed.')
@@ -42,6 +42,7 @@ def main():
     print('Disabling VNC connection and setting server to boot from hard drive')
     with open('settings.json', 'r') as settings:
         upcloud.do('PUT', '/server/' + server.uuid, settings)
+
     print("Restarting server...")
     upcloud.do('POST', '/server/' + server.uuid + '/start')
     server.wait_until('started')
