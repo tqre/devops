@@ -31,13 +31,14 @@
     postgresql_db:
       name: gitlabhq_production
 
+
+# Use ansible-vault here?
   - name: Create gitlab database user
     postgresql_user:
       db: gitlabhq_production
       name: testuser
       password: testuserspassword
 
-# create gitlabhq_production db + user
 # seed /etc/webapps/gitlab/database.yml with user+password
 
   - name: Start and enable redis cache database service
@@ -46,7 +47,7 @@
       enabled: yes
       state: started
 
-# redis configuration to use sockets instead of TCP /etc/redis.conf
+# redis configuration file to use sockets instead of TCP /etc/redis.conf
 # add gitlab user to redis group
 # then update /etc/webapps/gitlab/resque.yml to use sockets
 

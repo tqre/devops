@@ -56,7 +56,7 @@ class UpCloudAPIConnection:
         self.version = "/1.3"
         print("Connecting to " + self.address + "...")
 
-        with open('secrets', 'rb') as creds:
+        with open('../secrets/cloud_creds', 'rb') as creds:
             self.credentials = creds.read()
 
         self.test_credentials()
