@@ -9,6 +9,8 @@ The following files are used in deploy phase:
 `secrets/sudo_passwd` - administrative password  
 `secrets/ansible_vault` - ansible vault password file
 
+`encyprt_vars.sh` -script needs to be run before the install_gitlab playbook. It generates secret strings that are used to generate authentication tokens etc.
+
 ## Process
 1. Deploy VM instance to cloud with cloud-API scripts
 - deploy/deploy_server.py
