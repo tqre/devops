@@ -38,15 +38,16 @@
       enabled: yes
       state: started
 
+  - name: Create gitlab database user
+    postgresql_user:
+      name: admin
+      password: "{{ dbadminpasswd }}"
+      role_attr_flags: SUPERUSER
+
   - name: Create gitlab database
     postgresql_db:
       name: gitlabhq_production
-
-  - name: Create gitlab database user
-    postgresql_user:
-      db: gitlabhq_production
-      name: admin
-      password: "{{ dbadminpasswd }}"
+      owner: admin
 
   - name: Upload skeleton /etc/webapps/gitlab/database.yml configuration file
     copy:
@@ -65,9 +66,17 @@
       enabled: yes
       state: started
 
-# redis configuration file to use sockets instead of TCP /etc/redis.conf
-# add gitlab user to redis group
-# then update /etc/webapps/gitlab/resque.yml to use sockets
+  - name: Put gitlab user to redis group
+    user: 
+      name: gitlab
+      groups: redis
+
+  - name: Set /etc/webapps/gitlab/resque.yml configuration file
+    copy:
+      src: config_files/resque.yml
+      dest: /etc/webapps/gitlab/resque.yml
+
+# set redis configuration file to use sockets instead of TCP /etc/redis.conf
 
 # configuration file for gitlab: /etc/webapps/gitlab/gitlab.yml
 
@@ -93,6 +102,9 @@
     blockinfile:
       path: /etc/webapps/gitlab/secrets.yml
       create: yes
+      owner: root
+      group: gitlab
+      mode: 0640
       block: |
         production:
           secret_key_base: {{ secret_key_base }}
