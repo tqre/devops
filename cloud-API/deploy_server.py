@@ -26,7 +26,7 @@ def main():
     vnc_client.cmd('pacman -S archlinux-keyring --noconfirm')
 
     # Read the administrator password from a file, don't echo it to console
-    with open('../secrets/gitlab_sudo', 'r') as file:
+    with open('../secrets/sudo_passwd', 'r') as file:
         passwd = file.read()
     vnc_client.cmd('export PASSWD=' + passwd, False)
 
