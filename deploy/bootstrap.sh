@@ -19,16 +19,16 @@ label: gpt
 device: /dev/vda
 unit: sectors
 first-lba: 2048
-last-lba: 335544286
+last-lba: 167772126
 
 /dev/vda1 : start=        2048, size=        2048, type=21686148-6449-6E6F-744E-656564454649, 
 /dev/vda2 : start=        4096, size=     4194304, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F, 
-/dev/vda3 : start=     4198400, size=    33554432, type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709, 
-/dev/vda4 : start=    37752832, size=   167772160, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
-/dev/vda5 : start=   205524992, size=    33554432, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
-/dev/vda6 : start=   239079424, size=    33554432, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
-/dev/vda7 : start=   272633856, size=    33554432, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
-/dev/vda8 : start=   306188288, size=    29355999, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915,
+/dev/vda3 : start=     4198400, size=    16777216, type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709, 
+/dev/vda4 : start=    20975616, size=    83886080, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
+/dev/vda5 : start=   104861696, size=    16777216, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
+/dev/vda6 : start=   121638912, size=    16777216, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
+/dev/vda7 : start=   138416128, size=     8388608, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
+/dev/vda8 : start=   146804736, size=    20967391, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
 
 EOF
 

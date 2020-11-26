@@ -4,7 +4,7 @@
     "zone": "de-fra1",
     "title": "GitLab server",
     "hostname": "gitlab-tqre",
-    "plan": "4xCPU-8GB",
+    "plan": "2xCPU-4GB",
     "remote_access_enabled": "yes",
     "storage_devices": {
       "storage_device": [
@@ -15,7 +15,7 @@
         },
         {
           "action": "create",
-          "size": "160",
+          "size": "80",
           "title": "server HD",
           "tier": "maxiops"
         }
