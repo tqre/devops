@@ -1,17 +1,17 @@
 # DevOps - GitLab server setup scripts
 DevOps and DevSecOps study infrastructure setup scripts
 
-## Credentials
-`secrets/` -directory is used to fetch credentials from, and is not included in this repo for obvious reasons. 
-
-The following files are used in deploy phase:  
+## Credentials and secrets
+`secrets/`  is not included in this repo for obvious reasons. It contains the following files that are needed:  
 `secrets/cloud_creds` - Cloud API credentials  
 `secrets/sudo_passwd` - administrative password  
-`secrets/ansible_vault` - ansible vault password file
+`secrets/ansible_vault` - ansible vault password file  
+`secrets/gitlab.{key,crt}` - temporary SSL certificates for testing
 
-`encyprt_vars.sh` -script needs to be run before the install_gitlab playbook. It generates secret strings that are used to generate authentication tokens etc.
+`encrypt_vars.sh` -script needs to be run before the install_gitlab playbook. It generates secret strings that are used to generate authentication tokens etc.
 
 ## Process
+
 1. Deploy VM instance to cloud with cloud-API scripts
 - deploy/deploy_server.py
 

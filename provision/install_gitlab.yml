@@ -132,12 +132,31 @@
       group: gitlab
       mode: 0755  
 
-# Set up 'creates' - find out what files are missing before this command executes
-  - name: Initialize the GitLab database
+  - name: Initialize the GitLab database (this task fails if it has been run already)
     become_method: sudo
     become_user: gitlab
     shell: env $(cat environment | xargs) bundle exec rake gitlab:setup force=yes
     args:
       chdir: /usr/share/webapps/gitlab
 
-# set up webserver: nginx
+  - name: Upload nginx webserver configuration files and certificates
+    copy: src={{ item.src }} dest={{ item.dest }}
+    with_items:
+      - { src: 'config_files/nginx.conf', dest: '/etc/nginx/nginx.conf' }
+      - { src: 'config_files/nginx_gitlab.conf', dest: '/etc/nginx/nginx_gitlab.conf' }
+      - { src: '../secrets/gitlab.key', dest: '/etc/nginx/gitlab.key' }
+      - { src: '../secrets/gitlab.crt', dest: '/etc/nginx/gitlab.crt' }
+
+  - name: Start nginx proxy webserver
+    service:
+      name: nginx
+      enabled: yes
+      state: started
+
+  - name: Start GitLab
+    service:
+      name: gitlab.target
+      enabled: yes
+      state: started
+
+# Setup pacman hook for database migration on updates
