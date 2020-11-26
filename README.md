@@ -17,3 +17,8 @@ DevOps and DevSecOps study infrastructure setup scripts
 
 2. Provision server with GitLab using ansible
 - provision/install_gitlab.yml
+
+3. Browse to the public IP of the server and set up root password
+
+4. Backups?
+
