@@ -1,10 +1,10 @@
 {
   "server": {
     "boot_order": "cdrom,disk",
-    "zone": "fi-hel1",
-    "title": "test",
-    "hostname": "test",
-    "plan": "1xCPU-1GB",
+    "zone": "de-fra1",
+    "title": "GitLab server",
+    "hostname": "gitlab-tqre",
+    "plan": "2xCPU-4GB",
     "remote_access_enabled": "yes",
     "storage_devices": {
       "storage_device": [
@@ -15,7 +15,7 @@
         },
         {
           "action": "create",
-          "size": "25",
+          "size": "80",
           "title": "server HD",
           "tier": "maxiops"
         }

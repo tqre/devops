@@ -19,12 +19,17 @@ label: gpt
 device: /dev/vda
 unit: sectors
 first-lba: 2048
-last-lba: 52428766
+last-lba: 167772126
 
-/dev/vda1 : start=        2048, size=        2048, type=21686148-6449-6E6F-744E-656564454649
-/dev/vda2 : start=        4096, size=     8388608, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F
-/dev/vda3 : start=     8392704, size=    16777216, type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709
-/dev/vda4 : start=    25169920, size=    27258847, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915
+/dev/vda1 : start=        2048, size=        2048, type=21686148-6449-6E6F-744E-656564454649, 
+/dev/vda2 : start=        4096, size=     4194304, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F, 
+/dev/vda3 : start=     4198400, size=    16777216, type=4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709, 
+/dev/vda4 : start=    20975616, size=    83886080, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
+/dev/vda5 : start=   104861696, size=    16777216, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
+/dev/vda6 : start=   121638912, size=    16777216, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
+/dev/vda7 : start=   138416128, size=     8388608, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
+/dev/vda8 : start=   146804736, size=    20967391, type=933AC7E1-2EB4-4F13-B844-0E14E2AEF915, 
+
 EOF
 
 sfdisk /dev/vda < partition_map
@@ -32,10 +37,23 @@ mkfs.vfat /dev/vda1
 mkswap /dev/vda2
 mkfs.ext4 /dev/vda3
 mkfs.ext4 /dev/vda4
+mkfs.ext4 /dev/vda5
+mkfs.ext4 /dev/vda6
+mkfs.ext4 /dev/vda7
+mkfs.ext4 /dev/vda8
+
 swapon /dev/vda2
 mount /dev/vda3 /mnt
+mkdir /mnt/var
+mount /dev/vda4 /mnt/var
+mkdir /mnt/var/tmp
+mkdir /mnt/var/log
+mount /dev/vda5 /mnt/var/tmp
+mount /dev/vda6 /mnt/var/log
+mkdir /mnt/var/log/audit
+mount /dev/vda7 /mnt/var/log/audit
 mkdir /mnt/home
-mount /dev/vda4 /mnt/home
+mount /dev/vda8 /mnt/home
 
 # Bootstrap basic software + generate file system table
 pacstrap /mnt base linux grub openssh sudo nano python
