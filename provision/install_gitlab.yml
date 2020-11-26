@@ -26,7 +26,7 @@
       state: latest
 
   - name: Initialize postgresql database cluster 
-    command: initdb -D /var/lib/postgres/data
+    command: initdb -D /var/lib/postgres/data -E UTF8
     become_method: sudo
     become_user: postgres
     args:
@@ -60,6 +60,11 @@
       regexp: "^  password: "
       line: "  password: {{ dbadminpasswd }}"
 
+  - name: Upload redis configuration file
+    copy:
+      src: config_files/redis.conf
+      dest: /etc/redis.conf
+
   - name: Start and enable redis cache database service
     service:
       name: redis
@@ -75,10 +80,6 @@
     copy:
       src: config_files/resque.yml
       dest: /etc/webapps/gitlab/resque.yml
-
-# set redis configuration file to use sockets instead of TCP /etc/redis.conf
-
-# configuration file for gitlab: /etc/webapps/gitlab/gitlab.yml
 
   - name: Create file used for auth token generation - /etc/webapps/gitlab/secret
     lineinfile:
@@ -112,8 +113,31 @@
           otp_key_base: {{ otp_key_base }}
           openid_connect_signing_key: {{ openid_connect_signing_key }}
 
-# start gitlab-gitaly.service
+  - name: Upload the main configuration file - /etc/webapps/gitlab/gitlab.yml
+    copy:
+      src: config_files/gitlab.yml
+      dest: /etc/webapps/gitlab/gitlab.yml
 
-# initialize GitLab db
+  - name: Start the gitlab-gitaly service
+    service:
+      name: gitlab-gitaly
+      enabled: yes
+      state: started
+ 
+  - name: Set correct permissions for /usr/share/webapps/gitlab/tmp
+    file:
+      path: /usr/share/webapps/gitlab/tmp
+      state: directory
+      owner: gitlab
+      group: gitlab
+      mode: 0755  
+
+# Set up 'creates' - find out what files are missing before this command executes
+  - name: Initialize the GitLab database
+    become_method: sudo
+    become_user: gitlab
+    shell: env $(cat environment | xargs) bundle exec rake gitlab:setup force=yes
+    args:
+      chdir: /usr/share/webapps/gitlab
 
 # set up webserver: nginx
