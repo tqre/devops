@@ -5,7 +5,7 @@
 TZ="Europe/Helsinki"
 LOC="en_US.UTF-8"
 KEYBOARD="us"
-HOSTNAME=test-server
+HOSTNAME=gitlab-tqre
 USERNAME="tqre"
 PASSWORD=$PASSWD
 SSH_PORT="22"
