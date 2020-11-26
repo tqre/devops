@@ -19,6 +19,8 @@ DevOps and DevSecOps study infrastructure setup scripts
 - provision/install_gitlab.yml
 
 3. Browse to the public IP of the server and set up root password
+- wait, what?
 
-4. Backups?
+4. Backup (TODO)
+- even though the server can be trashed and created anew within few minutes, backing up the content is essential
 
