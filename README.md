@@ -1,5 +1,7 @@
 # DevOps - GitLab server setup scripts
-DevOps and DevSecOps study infrastructure setup scripts
+DevOps and DevSecOps study infrastructure setup scripts  
+
+The server is up and running at https://gitlab.tqre.fi
 
 ## Credentials and secrets
 `secrets/`  is not included in this repo for obvious reasons. It contains the following files that are needed:  
@@ -15,12 +17,12 @@ DevOps and DevSecOps study infrastructure setup scripts
 1. Deploy VM instance to cloud with cloud-API scripts
 - deploy/deploy_server.py
 
-2. Provision server with GitLab using ansible
+2. Provision server with GitLab using Ansible
 - provision/install_gitlab.yml
 
-3. Browse to the public IP of the server and set up root password
-- wait, what?
+3. Configure GitLab via browser interface
+- set up users and passwords, import SELinux repo for CI/CD construction
 
-4. Backup (TODO)
+4. Backups
 - even though the server can be trashed and created anew within few minutes, backing up the content is essential
 
