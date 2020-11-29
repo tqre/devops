@@ -40,16 +40,35 @@
       name: gitlabhq_production
       owner: admin
 
-  - name: Upload skeleton /etc/webapps/gitlab/database.yml configuration file
-    copy:
-      src: config_files/database.yml
-      dest: /etc/webapps/gitlab/database.yml
-
-  - name: Put database password into database.yml
-    lineinfile:
+  - name: Set up /etc/webapps/gitlab/database.yml configuration file
+    blockinfile:
       path: /etc/webapps/gitlab/database.yml
-      regexp: "^  password: "
-      line: "  password: {{ dbadminpasswd }}"
+      create: yes
+      owner: root
+      group: gitlab
+      mode: 0640
+      insertbefore: BOF
+      block: |
+        production:
+          adapter: postgresql
+          encoding: unicode
+          database: gitlabhq_production
+          pool: 10
+          username: admin
+          password: {{ dbadminpasswd }}
+          socket: /run/postgresql/.s.PGSQL.5432
+
+  - name: Clear database.yml from other data than managed lines
+    replace:
+      path: /etc/webapps/gitlab/database.yml
+      after: '# END ANSIBLE MANAGED BLOCK'
+      regexp: '^(.+)$'
+
+  - name: Clear database.yml from extra empty lines
+    replace:
+      path: /etc/webapps/gitlab/database.yml
+      after: '# END ANSIBLE MANAGED BLOCK\n'
+      regexp: '^(\s*$)'
 
   - name: Upload redis configuration file
     copy:
