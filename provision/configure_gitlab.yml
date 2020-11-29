@@ -35,4 +35,17 @@
     copy:
       src: ../secrets/gitlab.crt
       dest: /etc/gitlab-runner/certs/gitlab.tqre.fi.crt
-      
+
+  - name: Start gitlab-runner
+    service:
+      name: gitlab-runner
+      enabled: yes
+      state: started
+
+  - name: Register a shared runner
+    gitlab_runner:
+      api_url: https://gitlab.tqre.fi/
+      api_token: "{{ api_token }}"
+      description: Shared runner
+      registration_token: "{{ runner_token }}"
+      validate_certs: no
