@@ -15,8 +15,14 @@
   - name: Create a regular user for GitLab instance
     gitlab_user:
       api_url: https://gitlab.tqre.fi/
+      api_token: {{ api_token }}
       validate_certs: no
-      api_username:
+      access_level: guest
+      name: Test
+      username: test
+      password: test
+      email: test@test.test
+      confirm: no
 
   - name: Create a directory for gitlab-runner's certificates
     file:
