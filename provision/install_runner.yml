@@ -16,3 +16,13 @@
       name: tqre
       groups: docker
 
+  - name: Create a directory for gitlab-runner's certificates
+    file:
+      path: /etc/gitlab-runner/certs
+      state: directory
+
+  - name: Put server certificate for runner to find
+    copy:
+      src: ../secrets/gitlab.crt
+      dest: /etc/gitlab-runner/certs/gitlab.tqre.fi.crt
+      
