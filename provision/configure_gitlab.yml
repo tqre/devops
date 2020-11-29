@@ -2,6 +2,8 @@
   hosts: gitlab
   become: yes
   become_method: sudo
+  vars_files:
+    - encrypted_tokens.yml
 
   tasks:
   - name: Install gitlab-runner, python GitLab API wrapper and docker
@@ -18,10 +20,10 @@
       api_token: {{ api_token }}
       validate_certs: no
       access_level: guest
-      name: Test
+      name: Test User
       username: test
-      password: test
-      email: test@test.test
+      password: {{ user_password }}
+      email: email@example.com
       confirm: no
 
   - name: Create a directory for gitlab-runner's certificates

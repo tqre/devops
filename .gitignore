@@ -1,3 +1,4 @@
 .idea/*
 secrets/*
 provision/encrypted_variables.yml
+provision/encrypted_tokens.yml
