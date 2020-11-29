@@ -6,8 +6,10 @@
   tasks:
   - name: Install gitlab-runner and docker
     pacman:
-      - gitlab-runner
-      - docker
+      name:
+        - gitlab-runner
+        - docker
+      state: latest  
 
   - name: Put admin user to docker group
     user:
