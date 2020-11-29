@@ -14,6 +14,7 @@ def main():
     # Deploy the server and save it as a Server object
     data = json.loads(upcloud.do('POST', '/server', server_specs))
     server = Server(data, upcloud)
+    print('Server public IP address: ' + server.ip)
     server.wait_until('started')
 
     # Send commands to server with vnc connection
@@ -46,8 +47,6 @@ def main():
     print("Restarting server...")
     upcloud.do('POST', '/server/' + server.uuid + '/start')
     server.wait_until('started')
-    print('Server is now ready to be configured further.')
-    print('Server public IP address: ' + server.ip)
 
 
 class UpCloudAPIConnection:
