@@ -62,7 +62,7 @@ production: &base
 
     ## Email settings
     # Uncomment and set to false if you need to disable email sending from GitLab (default: true)
-    # email_enabled: true
+    email_enabled: false
     # Email address used in the "From" field in mails sent by GitLab
     email_from: example@example.com
     email_display_name: GitLab
