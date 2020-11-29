@@ -22,6 +22,7 @@ The server is up and running at https://gitlab.tqre.fi
 - provision/install_gitlab.yml
 
 4. Configure GitLab further 
+- GitLab instance's root password is in secrets/gitlabrootpasswd
 - application settings API
 - gitlab-runner
 
