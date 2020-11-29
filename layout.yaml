@@ -10,10 +10,4 @@ windows:
     -
     - 
     - 
-- window_name: gitlab
-  layout: main-vertical
-  panes:
-    - ssh gitlab.tqre.fi
-    - 
-    -
 
