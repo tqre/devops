@@ -142,10 +142,10 @@
       group: gitlab
       mode: 0755  
 
-  - name: Initialize the GitLab database (this task fails if it has been run already)
+  - name: Initialize the GitLab database
     become_method: sudo
     become_user: gitlab
-    shell: env $(cat environment | xargs) bundle exec rake gitlab:setup force=yes
+    shell: env $(cat environment | xargs) bundle exec rake gitlab:setup force=yes GITLAB_ROOT_PASSWORD="{{ gitlabrootpasswd }}"
     args:
       chdir: /usr/share/webapps/gitlab
 

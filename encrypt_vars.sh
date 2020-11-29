@@ -18,13 +18,21 @@ for file in ${FILES[@]};do
   fi
 done
 
-if [[ -f secrets/dbadminpasswd ]]; then
+if [[ -f secrets/dbadminpasswd  ]]; then
   echo "Database admin password exists already, aborting"; exit
 fi
 
+if [[ -f secrets/gitlabrootpasswd  ]]; then
+  echo "GitLab root password exists already, aborting"; exit
+fi
+
+# Generate GitLab root account password and the encypted version
+</dev/urandom tr -dc _A-Za-z0-9 | head -c32 > secrets/gitlabrootpasswd
+ansible-vault encrypt_string $(<secrets/gitlabrootpasswd) --name gitlabrootpasswd > provision/encrypted_variables.yml
+
 # Generate database admin password and the encrypted version
 </dev/urandom tr -dc _A-Za-z0-9 | head -c32 > secrets/dbadminpasswd
-ansible-vault encrypt_string $(<secrets/dbadminpasswd) --name dbadminpasswd > provision/encrypted_variables.yml
+ansible-vault encrypt_string $(<secrets/dbadminpasswd) --name dbadminpasswd >> provision/encrypted_variables.yml
 
 # Generate random strings into each file
 for file in ${FILES[@]}; do
