@@ -4,19 +4,17 @@ DevOps and DevSecOps study infrastructure setup scripts
 The server is up and running at https://gitlab.tqre.fi
 
 ## Credentials and secrets created
-`secrets/`  is not included in this repo for obvious reasons. It contains the following files that are needed:  
+`secrets/` -directory is used to contain sensitive information. Following files have to be created first:
 `secrets/cloud_creds` - Cloud API credentials  
 `secrets/sudo_passwd` - administrative password  
 `secrets/ansible_vault` - ansible vault password file  
-
-`secrets/gitlab.{key,crt}` - self-signed SSL certificate
 
 ## Process
 
 1. Deploy VM instance to cloud with cloud-API scripts
 - deploy/deploy_server.py
 
-2. Create the needed secrets with helper scritps
+2. Create the needed secrets with helper scripts
 - encrypt_vars.sh
 - make_cert.sh
 
@@ -24,7 +22,7 @@ The server is up and running at https://gitlab.tqre.fi
 - provision/install_gitlab.yml
 
 4. Configure GitLab further 
-- users 
+- application settings API
 - gitlab-runner
 
 5. Backups
