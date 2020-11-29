@@ -1,0 +1,16 @@
+- name: Set up a local gitlab-runner
+  hosts: gitlab
+  become: yes
+  become_method: sudo
+
+  tasks:
+  - name: Install gitlab-runner and docker
+    pacman:
+      - gitlab-runner
+      - docker
+
+  - name: Put admin user to docker group
+    user:
+      name: tqre
+      groups: docker
+
