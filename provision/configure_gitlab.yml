@@ -17,12 +17,12 @@
   - name: Create a regular user for GitLab instance
     gitlab_user:
       api_url: https://gitlab.tqre.fi/
-      api_token: {{ api_token }}
+      api_token: "{{ api_token }}"
       validate_certs: no
       access_level: guest
       name: Test User
       username: test
-      password: {{ user_password }}
+      password: "{{ user_password }}"
       email: email@example.com
       confirm: no
 
