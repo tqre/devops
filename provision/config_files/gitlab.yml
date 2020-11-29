@@ -1,36 +1,6 @@
-# # # # # # # # # # # # # # # # # #
-# GitLab application config file  #
-# # # # # # # # # # # # # # # # # #
-#
-###########################  NOTE  #####################################
-# This file should not receive new settings. All configuration options #
-# * are being moved to ApplicationSetting model!                       #
-# If a setting requires an application restart say so in that screen.  #
-# If you change this file in a Merge Request, please also create       #
-# a MR on https://gitlab.com/gitlab-org/omnibus-gitlab/merge_requests. #
-# For more details see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/doc/settings/gitlab.yml.md #
-########################################################################
-#
-#
-# How to use:
-# 1. Copy file as gitlab.yml
-# 2. Update gitlab -> host with your fully qualified domain name
-# 3. Update gitlab -> email_from
-# 4. If you installed Git from source, change git -> bin_path to /usr/local/bin/git
-#    IMPORTANT: If Git was installed in a different location use that instead.
-#    You can check with `which git`. If a wrong path of Git is specified, it will
-#     result in various issues such as failures of GitLab CI builds.
-# 5. Review this configuration file for other settings you may want to adjust
-
 production: &base
-  #
-  # 1. GitLab app settings
-  # ==========================
-
-  ## GitLab settings
   gitlab:
-    ## Web server settings (note: host is the FQDN, do not include http://)
-    host: localhost
+    host: gitlab.tqre.fi
     port: 80 # Set to 443 if using HTTPS, see installation.md#using-https for additional HTTPS configuration details
     https: false # Set to true if using HTTPS, see installation.md#using-https for additional HTTPS configuration details
     # The maximum time unicorn/puma can spend on the request. This needs to be smaller than the worker timeout.
