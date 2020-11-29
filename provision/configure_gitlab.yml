@@ -1,20 +1,22 @@
-- name: Set up a local gitlab-runner
+- name: Configure GitLab
   hosts: gitlab
   become: yes
   become_method: sudo
 
   tasks:
-  - name: Install gitlab-runner and docker
+  - name: Install gitlab-runner, python GitLab API wrapper and docker
     pacman:
       name:
         - gitlab-runner
         - docker
+        - python-gitlab
       state: latest  
 
-  - name: Put admin user to docker group
-    user:
-      name: tqre
-      groups: docker
+  - name: Create a regular user for GitLab instance
+    gitlab_user:
+      api_url: https://gitlab.tqre.fi/
+      validate_certs: no
+      api_username:
 
   - name: Create a directory for gitlab-runner's certificates
     file:
