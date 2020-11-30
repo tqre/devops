@@ -31,7 +31,7 @@
       api_url: https://gitlab.tqre.fi/
       api_token: "{{ token_api }}"
       validate_certs: no
-      access_level: guest
+      access_level: developer
       name: "{{ username }}"
       username: "{{ user_login }}"
       password: "{{ passwd_gitlab_user }}"
