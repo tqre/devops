@@ -2,6 +2,7 @@
   hosts: gitlab
   become: yes
   become_method: sudo
+  ansible_become_password: "{{ passwd_server_sudo }}"
   vars_files:
     - encrypted_variables.yml
 
@@ -32,7 +33,7 @@
   - name: Create gitlab database user
     postgresql_user:
       name: admin
-      password: "{{ dbadminpasswd }}"
+      password: "{{ passwd_dbadmin }}"
       role_attr_flags: SUPERUSER
 
   - name: Create gitlab database
@@ -55,7 +56,7 @@
           database: gitlabhq_production
           pool: 10
           username: admin
-          password: {{ dbadminpasswd }}
+          password: {{ passwd_dbadmin }}
           socket: /run/postgresql/.s.PGSQL.5432
 
   - name: Clear database.yml from other data than managed lines
@@ -94,7 +95,7 @@
   - name: Create file used for auth token generation - /etc/webapps/gitlab/secret
     lineinfile:
       path: /etc/webapps/gitlab/secret
-      line: "{{ gitlab_secret }}"
+      line: "{{ enckey_gitlab_secret }}"
       create: yes
       owner: root
       group: gitlab
@@ -103,7 +104,7 @@
   - name: Create file used for auth token generation - /etc/webapps/gitlab-shell/secret
     lineinfile:
       path: /etc/webapps/gitlab-shell/secret
-      line: "{{ gitlab_shell_secret }}"
+      line: "{{ enckey_gitlab_shell_secret }}"
       create: yes
       owner: root
       group: gitlab
@@ -118,10 +119,10 @@
       mode: 0640
       block: |
         production:
-          secret_key_base: {{ secret_key_base }}
-          db_key_base: {{ db_key_base }}
-          otp_key_base: {{ otp_key_base }}
-          openid_connect_signing_key: {{ openid_connect_signing_key }}
+          secret_key_base: {{ enckey_secret_key_base }}
+          db_key_base: {{ enckey_db_key_base }}
+          otp_key_base: {{ enckey_otp_key_base }}
+          openid_connect_signing_key: {{ enckey_openid_connect_signing_key }}
 
   - name: Upload the main configuration file - /etc/webapps/gitlab/gitlab.yml
     copy:
@@ -145,7 +146,7 @@
   - name: Initialize the GitLab database
     become_method: sudo
     become_user: gitlab
-    shell: env $(cat environment | xargs) bundle exec rake gitlab:setup force=yes GITLAB_ROOT_PASSWORD="{{ gitlabrootpasswd }}"
+    shell: env $(cat environment | xargs) bundle exec rake gitlab:setup force=yes GITLAB_ROOT_PASSWORD="{{ passwd_gitlab_admin }}"
     args:
       chdir: /usr/share/webapps/gitlab
 
