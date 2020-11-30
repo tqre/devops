@@ -52,3 +52,9 @@ for file in ${KEYS[@]}; do
   ansible-vault encrypt_string $(<$SEC_DIR/$file) --name $file >> $ENC_FILE
 done
 
+# Generate the SSL certificate from config file
+openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:secp384r1 \
+	-nodes -config cert.conf	\
+	-out $SEC_DIR/gitlab.crt	\
+	-keyout $SEC_DIR/gitlab.key	\
+	-extensions req_ext
