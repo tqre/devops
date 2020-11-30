@@ -16,7 +16,7 @@
         {
           "action": "create",
           "size": "80",
-          "title": "server HD",
+          "title": "GitLab server HD",
           "tier": "maxiops"
         }
       ]
