@@ -1,2 +1,2 @@
 [gitlab]
-gitlab.tqre.fi
+gitlab.tqre.fi ansible_become_password="{{ passwd_server_sudo }}"
