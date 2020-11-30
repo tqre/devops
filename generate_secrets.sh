@@ -7,20 +7,21 @@ ENC_FILE=provision/encrypted_variables.yml
 
 # Encryption keys needed by GitLab
 KEYS=(
-	gitlab_secret
-	gitlab_shell_secret
-	secret_key_base
-	db_key_base
-	otp_key_base
-	openid_connect_signing_key
+	enckey_db_key_base
+	enckey_gitlab_secret
+	enckey_gitlab_shell_secret
+	enckey_openid_connect_signing_key
+	enckey_otp_key_base
+	enckey_secret_key_base
 )
 
 # Passwords needed
 PASSWDS=(
-	becomepasswd
-	dbadminpasswd
-	gitlabrootpasswd
-	vaultpasswd
+	passwd_ansible_vault
+	passwd_dbadmin
+	passwd_gitlab_admin
+	passwd_gitlab_user
+	passwd_server_sudo
 )	
 
 # Check that none the files exist, as we don't want to overwrite any
