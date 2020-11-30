@@ -2,7 +2,6 @@
   hosts: gitlab
   become: yes
   become_method: sudo
-  ansible_become_password: "{{ passwd_server_sudo }}"
   vars_files:
     - encrypted_variables.yml
 
