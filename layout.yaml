@@ -1,7 +1,7 @@
 session_name: DevOps
 environment:
   ANSIBLE_CONFIG: provision/ansible.cfg
-  ANSIBLE_VAULT_PASSWORD_FILE: /home/devops/secrets/ansible_vault
+  ANSIBLE_VAULT_PASSWORD_FILE: /home/devops/secrets/passwd_ansible_vault
 start_directory: /home/devops
 windows:
 - window_name: ansible
