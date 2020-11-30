@@ -4,6 +4,7 @@
   become_method: sudo
   vars_files:
     - encrypted_tokens.yml
+    - encrypted_variables.yml
 
   tasks:
   - name: Install gitlab-runner, python GitLab API wrapper and docker
@@ -14,15 +15,22 @@
         - python-gitlab
       state: latest  
 
+  - name: Create a group for SELinux project
+    gitlab_group:
+      api_url: https://gitlab.tqre.fi/
+      api_token: "{{ token_api }}"
+      name: selinux
+
   - name: Create a regular user for GitLab instance
     gitlab_user:
       api_url: https://gitlab.tqre.fi/
-      api_token: "{{ api_token }}"
+      api_token: "{{ token_api }}"
       validate_certs: no
       access_level: guest
       name: Test User
       username: test
-      password: "{{ user_password }}"
+      password: "{{ passwd_gitlab_user }}"
+      group: selinux
       email: email@example.com
       confirm: no
 
@@ -36,16 +44,16 @@
       src: ../secrets/gitlab.crt
       dest: /etc/gitlab-runner/certs/gitlab.tqre.fi.crt
 
+  - name: Register a shared runner
+    gitlab_runner:
+      api_url: https://gitlab.tqre.fi/
+      api_token: "{{ token_api }}"
+      description: Shared runner
+      registration_token: "{{ token_runner }}"
+      validate_certs: no
+
   - name: Start gitlab-runner
     service:
       name: gitlab-runner
       enabled: yes
       state: started
-
-  - name: Register a shared runner
-    gitlab_runner:
-      api_url: https://gitlab.tqre.fi/
-      api_token: "{{ api_token }}"
-      description: Shared runner
-      registration_token: "{{ runner_token }}"
-      validate_certs: no
