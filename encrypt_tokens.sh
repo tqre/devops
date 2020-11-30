@@ -10,11 +10,15 @@ TOKENS=(
 	token_runner
 )
 
+# Clear the encrypted tokens file
+echo "# GitLab tokens in encrypted form" > $ENC_FILE
+
+# Generate encrypted versions of the tokens for playbook use
 for token in ${TOKENS[@]}; do
   if [[ ! -f secrets/$token ]]; then
     echo "No $token found. Aborting..."; exit
   fi
-  ansible-vault encrypt_string $(<$SEC_DIRE/$token) --name $token >> $ENC_FILE
+  ansible-vault encrypt_string $(<$SEC_DIR/$token) --name $token >> $ENC_FILE
 done
 
 
