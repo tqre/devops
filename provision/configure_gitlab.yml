@@ -24,6 +24,7 @@
       api_url: https://gitlab.tqre.fi/
       api_token: "{{ token_api }}"
       name: "{{ groupname }}"
+      validate_certs: no
 
   - name: Create a regular user for GitLab instance
     gitlab_user:
