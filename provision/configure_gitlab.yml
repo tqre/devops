@@ -5,6 +5,10 @@
   vars_files:
     - encrypted_tokens.yml
     - encrypted_variables.yml
+  vars:
+    username: Test User
+    user_login: testuser
+    groupname: testgroup
 
   tasks:
   - name: Install gitlab-runner, python GitLab API wrapper and docker
@@ -19,7 +23,7 @@
     gitlab_group:
       api_url: https://gitlab.tqre.fi/
       api_token: "{{ token_api }}"
-      name: selinux
+      name: "{{ groupname }}"
 
   - name: Create a regular user for GitLab instance
     gitlab_user:
@@ -27,10 +31,10 @@
       api_token: "{{ token_api }}"
       validate_certs: no
       access_level: guest
-      name: Test User
-      username: test
+      name: "{{ username }}"
+      username: "{{ user_login }}"
       password: "{{ passwd_gitlab_user }}"
-      group: selinux
+      group: "{{ groupname }}"
       email: email@example.com
       confirm: no
 
@@ -57,3 +61,12 @@
       name: gitlab-runner
       enabled: yes
       state: started
+
+  - name: Import selinux project repository from GitHub
+    gitlab_project:
+      api_url: https://gitlab.tqre.fi/
+      api_token: "{{ token_api }}"
+      name: selinux
+      group: "{{ groupname }}"
+      import_url: https://github.com/tqre/selinux
+      validate_certs: no
