@@ -149,13 +149,25 @@
     args:
       chdir: /usr/share/webapps/gitlab
 
-  - name: Upload nginx webserver configuration files and certificates
+  - name: Make directory for nginx certificates
+    file:
+      path: /etc/nginx/ssl
+      state: directory
+
+  - name: Upload nginx webserver configuration files and certificate
     copy: src={{ item.src }} dest={{ item.dest }}
     with_items:
       - { src: 'config_files/nginx.conf', dest: '/etc/nginx/nginx.conf' }
       - { src: 'config_files/nginx_gitlab.conf', dest: '/etc/nginx/nginx_gitlab.conf' }
-      - { src: '../secrets/gitlab.key', dest: '/etc/nginx/gitlab.key' }
-      - { src: '../secrets/gitlab.crt', dest: '/etc/nginx/gitlab.crt' }
+      - { src: '../secrets/gitlab.key', dest: '/etc/nginx/ssl/gitlab.key' }
+      - { src: '../secrets/gitlab.crt', dest: '/etc/nginx/ssl/gitlab.crt' }
+
+  - name: Set permissions for the certificate key
+    file:
+      path: /etc/nginx/ssl/gitlab.key
+      owner: root
+      group: http
+      mode: 0440
 
   - name: Start nginx proxy webserver
     service:
