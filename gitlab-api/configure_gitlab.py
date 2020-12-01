@@ -12,4 +12,6 @@ ses.verify = '../secrets/gitlab.crt'
 # Create a connection object
 gl = gitlab.Gitlab('https://gitlab.tqre.fi', private_token=token, session=ses)
 
-print(gl.settings.get())
+settings = gl.settings.get()
+settings.signup_enabled = False
+settings.save()
