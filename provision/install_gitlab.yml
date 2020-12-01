@@ -167,7 +167,7 @@
       path: /etc/nginx/ssl/gitlab.key
       owner: root
       group: http
-      mode: 0440
+      mode: 0400
 
   - name: Start nginx proxy webserver
     service:
