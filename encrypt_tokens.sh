@@ -7,7 +7,6 @@ ENC_FILE=provision/encrypted_tokens.yml
 
 TOKENS=(
 	token_api
-	token_runner
 )
 
 # Clear the encrypted tokens file
