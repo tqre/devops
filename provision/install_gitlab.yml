@@ -14,6 +14,8 @@
         - redis
         - nginx-mainline
         - gitlab
+        - docker
+        - gitlab-runner
       state: latest
 
   - name: Initialize postgresql database cluster 
@@ -166,7 +168,7 @@
     file:
       path: /etc/nginx/ssl/gitlab.key
       owner: root
-      group: http
+      group: root
       mode: 0400
 
   - name: Start nginx proxy webserver
@@ -178,6 +180,22 @@
   - name: Start GitLab
     service:
       name: gitlab.target
+      enabled: yes
+      state: started
+
+  - name: Create a directory for gitlab-runner's certificates
+    file:
+      path: /etc/gitlab-runner/certs
+      state: directory
+
+  - name: Put server certificate for runner to find
+    copy:
+      src: ../secrets/gitlab.crt
+      dest: /etc/gitlab-runner/certs/gitlab.tqre.fi.crt
+
+  - name: Start gitlab-runner
+    service:
+      name: gitlab-runner
       enabled: yes
       state: started
 
