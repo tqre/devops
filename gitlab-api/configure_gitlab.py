@@ -1,9 +1,15 @@
 import gitlab
+import requests
 
 # Authentication token has to be acquired manually
 with open('../secrets/token_api', 'r') as file:
     token = file.read()
 
-gl = gitlab.Gitlab('https://gitlab.tqre.fi', private_token=token)
+# Self-signed certificate verification
+ses = requests.Session()
+ses.verify = '../secrets/gitlab.crt'
 
-print(gl.api_version)
+# Create a connection object
+gl = gitlab.Gitlab('https://gitlab.tqre.fi', private_token=token, session=ses)
+
+print(gl.settings.get())
