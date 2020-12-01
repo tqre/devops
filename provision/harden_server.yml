@@ -1,0 +1,24 @@
+- name: Server hardening configurations
+  hosts: all
+  become: yes
+  become_method: sudo
+  vars_files:
+    - encrypted_variables.yml
+
+  tasks:
+  - name: Install packages - firewall
+    pacman:
+      name:
+        - nftables
+      state: latest
+
+  - name: Upload firewall configuration file
+    copy:
+      src: config_files/nftables.conf
+      dest: /etc/nftables.conf
+
+  - name: Enable nftables firewall
+    service:
+      name: nftables
+      enabled: yes
+      state: started
