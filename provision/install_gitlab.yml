@@ -16,6 +16,7 @@
         - gitlab
         - docker
         - gitlab-runner
+        - python-gitlab
       state: latest
 
   - name: Initialize postgresql database cluster 

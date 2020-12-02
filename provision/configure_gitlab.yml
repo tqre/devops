@@ -1,0 +1,41 @@
+- name: Set up GitLab user, project and runner
+  hosts: gitlab
+  become: yes
+  become_method: sudo
+  vars_files:
+    - encrypted_tokens.yml
+    - encrypted_variables.yml
+  vars:
+    username: Test User
+    user_login: testuser
+    groupname: testgroup
+
+  tasks:
+  - name: Create a group for SELinux project
+    gitlab_group:
+      api_url: https://gitlab.tqre.fi/
+      api_token: "{{ token_api }}"
+      name: "{{ groupname }}"
+      validate_certs: no
+
+  - name: Create a regular user for GitLab instance
+    gitlab_user:
+      api_url: https://gitlab.tqre.fi/
+      api_token: "{{ token_api }}"
+      validate_certs: no
+      access_level: owner
+      name: "{{ username }}"
+      username: "{{ user_login }}"
+      password: "{{ passwd_gitlab_user }}"
+      group: "{{ groupname }}"
+      email: email@example.com
+      confirm: no
+
+  - name: Import selinux project repository from GitHub
+    gitlab_project:
+      api_url: https://gitlab.tqre.fi/
+      api_token: "{{ token_api }}"
+      name: selinux
+      group: "{{ groupname }}"
+      import_url: https://github.com/tqre/selinux
+      validate_certs: no

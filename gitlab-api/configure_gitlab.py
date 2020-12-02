@@ -57,5 +57,6 @@ except gitlab.GitlabCreateError:
 runner = gl.runners.create({
     'token': token_runner_registration,
     'description': 'shared test runner',
+    'url': 'https://gitlab.tqre.fi'
 })
 
