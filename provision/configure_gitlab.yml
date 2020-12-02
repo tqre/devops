@@ -39,3 +39,16 @@
       group: "{{ groupname }}"
       import_url: https://github.com/tqre/selinux
       validate_certs: no
+
+  - name: Create a local shared runner
+    shell: |
+      gitlab-runner register				\
+        --non-interactive				\
+        --url "https://gitlab.tqre.fi/"			\
+        --tls-ca-file "/etc/nginx/ssl/gitlab.crt"	\
+        --registration-token "{{ token_runner }}"	\
+        --executor "shell"				\
+        --description "test runner"			\
+        --locked="false"
+    args:
+      creates: /etc/gitlab-runner/config.toml
