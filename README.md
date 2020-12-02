@@ -17,9 +17,12 @@ The server is up and running at https://gitlab.tqre.fi
 - provision/install_gitlab.yml
 
 4. Configure GitLab further 
-- GitLab instance's root password is in secrets/passwd_gitlab_admin
-- gitlab-runner configuration playbook
-- additional application settings with API?
+- Log in to GitLab instance web UI as root and acquire needed tokens (api + shared runner registration)
+- place them in secrets/ and encrypt them for ansible use
+  - encrypt_tokens.sh
+- additional application settings with python-API
+  - configure_gitlab.py
+- run configure_gitlab.yml playbook
 
 5. Backups
 - even though the server can be trashed and created anew within few minutes, backing up the content is essential
