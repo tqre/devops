@@ -1,8 +1,6 @@
 # DevOps - GitLab server setup scripts
 DevOps and DevSecOps study infrastructure setup scripts  
 
-The server is up and running at https://gitlab.tqre.fi
-
 `secrets/cloud_creds` - Cloud API credentials are needed
 
 ## Process
