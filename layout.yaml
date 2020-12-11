@@ -7,8 +7,8 @@ windows:
 - window_name: ansible
   layout: main-vertical
   panes:
-    -
-    - 
+    - cd deploy
+    - cd provision
     - 
 - window_name: gitlab
   layout: main-vertical
