@@ -190,9 +190,14 @@
       enabled: yes
       state: started
 
-  - name: Remove gitlab-runner configuration file
+  - name: Remove default gitlab-runner configuration file
     file:
       path: /etc/gitlab-runner/config.toml
       state: absent
 
+  - name: Start and enable docker service daemon
+    service:
+      name: docker
+      enabled: yes
+      state: started
 # TODO: Setup pacman hook for database migration on updates
