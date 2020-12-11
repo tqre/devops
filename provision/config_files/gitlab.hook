@@ -1,0 +1,9 @@
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = gitlab
+
+[Action]
+Description = Upgrade gitlab database and restarting services
+When = PostTransaction
+Exec = /etc/pacman.d/hooks/gitlab-upgrade.sh

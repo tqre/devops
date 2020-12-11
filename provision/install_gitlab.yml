@@ -137,7 +137,7 @@
       enabled: yes
       state: started
  
-  - name: Set correct permissions for /usr/share/webapps/gitlab/tmp
+  - name: Set 0755 permissions for /usr/share/webapps/gitlab/tmp
     file:
       path: /usr/share/webapps/gitlab/tmp
       state: directory
@@ -151,6 +151,12 @@
     shell: env $(cat environment | xargs) bundle exec rake gitlab:setup force=yes GITLAB_ROOT_PASSWORD="{{ passwd_gitlab_admin }}"
     args:
       chdir: /usr/share/webapps/gitlab
+      creates: /etc/webapps/gitlab/db_init_true
+
+  - name: Create the db initialization file
+    file:
+      path: /etc/webapps/gitlab/db_init_true
+      state: touch
 
   - name: Make directory for nginx certificates
     file:
@@ -184,6 +190,22 @@
       enabled: yes
       state: started
 
+  - name: Create pacman hooks directory
+    file:
+      path: /etc/pacman.d/hooks
+      state: directory
+
+  - name: Set up GitLab upgrade pacman hook
+    copy: src={{ item.src }} dest={{ item.dest }}
+    with_items:
+      - { src: 'config_files/gitlab.hook', dest: '/etc/pacman.d/hooks/gitlab.hook' }
+      - { src: 'config_files/gitlab-upgrade.sh', dest: '/etc/pacman.d/hooks/gitlab-upgrade.sh' }
+
+  - name: Make GitLab upgrade hook script executable
+    file:
+      path: /etc/pacman.d/hooks/gitlab-upgrade.sh
+      mode: 0700
+
   - name: Start gitlab-runner
     service:
       name: gitlab-runner
@@ -195,9 +217,17 @@
       path: /etc/gitlab-runner/config.toml
       state: absent
 
+  - name: Put gitlab-runner user to docker group
+    user:
+      name: gitlab-runner
+      groups: docker
+      append: yes
+
   - name: Start and enable docker service daemon
     service:
       name: docker
       enabled: yes
       state: started
+
+
 # TODO: Setup pacman hook for database migration on updates
