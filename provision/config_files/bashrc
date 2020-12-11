@@ -1,0 +1,14 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+show_git_branch() {
+        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+alias ls='ls --color=auto'
+PS1='[\u@\[\e[0;35m\]\h\[\e[m\]:\w]\[\e[0;33m\]$(show_git_branch)\[\e[m\]\$ '
+export GIT_EDITOR=nano
