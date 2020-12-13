@@ -49,7 +49,7 @@
         --registration-token "{{ token_runner }}"	\
         --executor "shell"				\
         --description "test runner"			\
-        --output_limit 8192				\
+        --output-limit "8192"				\
         --locked="false"
     args:
       creates: /etc/gitlab-runner/config.toml
