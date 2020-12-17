@@ -6,9 +6,9 @@
     - encrypted_tokens.yml
     - encrypted_variables.yml
   vars:
-    username: Test User
-    user_login: testuser
-    groupname: testgroup
+    username: Tuomo Kuure
+    user_login: tqre
+    groupname: selinux
 
   tasks:
   - name: Create a group for SELinux project
@@ -28,7 +28,7 @@
       username: "{{ user_login }}"
       password: "{{ passwd_gitlab_user }}"
       group: "{{ groupname }}"
-      email: email@example.com
+      email: tkuure@gmail.com
       confirm: no
 
   - name: Import selinux project repository from GitHub

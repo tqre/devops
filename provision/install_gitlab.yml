@@ -217,10 +217,10 @@
       path: /etc/gitlab-runner/config.toml
       state: absent
 
-  - name: Put gitlab-runner user to docker group
+  - name: Put gitlab-runner user to docker and http groups
     user:
       name: gitlab-runner
-      groups: docker
+      groups: docker, http
       append: yes
 
   - name: Start and enable docker service daemon
@@ -229,5 +229,9 @@
       enabled: yes
       state: started
 
-
-# TODO: Setup pacman hook for database migration on updates
+  - name: Create a public directory for testing repository
+    file:
+      path: /srv/http/selinux-testing
+      state: directory
+      group: http
+      mode: 0775
