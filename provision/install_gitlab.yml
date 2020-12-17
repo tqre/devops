@@ -234,4 +234,4 @@
       path: /srv/http/selinux-testing
       state: directory
       group: http
-      mode: 0775
+      mode: 0774
