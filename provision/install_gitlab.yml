@@ -168,6 +168,7 @@
     with_items:
       - { src: 'config_files/nginx.conf', dest: '/etc/nginx/nginx.conf' }
       - { src: 'config_files/nginx_gitlab.conf', dest: '/etc/nginx/nginx_gitlab.conf' }
+      - { src: 'config_files/nginx_selinux-testing.conf', dest: '/etc/nginx/nginx_selinux-testing.conf' }
       - { src: '../secrets/gitlab.key', dest: '/etc/nginx/ssl/gitlab.key' }
       - { src: '../secrets/gitlab.crt', dest: '/etc/nginx/ssl/gitlab.crt' }
 
