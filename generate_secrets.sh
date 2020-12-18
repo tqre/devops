@@ -49,7 +49,7 @@ done
 
 # Generate random strings for GitLab encryption keys and store them as ansible vault variables
 for file in ${KEYS[@]}; do
-  hexdump -v -n 64 -e '1/1 "%02x"' /dev/urandom > secrets/$file
+  hexdump -v -n 64 -e '1/1 "%02x"' /dev/urandom > $SEC_DIR/$file
   ansible-vault encrypt_string $(<$SEC_DIR/$file) --name $file >> $ENC_FILE
 done
 
