@@ -43,6 +43,11 @@
       name: gitlabhq_production
       owner: admin
 
+  - name: Don't update postgresql automatically - set custom package manager config file
+    copy:
+      src: config_files/pacman.conf
+      dest: /etc/pacman.conf
+
   - name: Set up /etc/webapps/gitlab/database.yml configuration file
     blockinfile:
       path: /etc/webapps/gitlab/database.yml
