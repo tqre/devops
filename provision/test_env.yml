@@ -13,12 +13,11 @@
         - arch-install-scripts
         - parted
 
-  - name: Give gitlab-runner command access for tests
+  - name: Give gitlab-runner passwordless sudo access
     lineinfile:
       path: /etc/sudoers.d/gitlab-runner
-      line: 'gitlab-runner ALL=(ALL) NOPASSWD: /usr/bin/losetup,/usr/bin/parted,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacstrap,/usr/bin/pacman'
+      line: 'gitlab-runner ALL=(ALL) NOPASSWD: ALL'
       create: yes
       owner: root
       group: root
       mode: 0440
-
