@@ -6,7 +6,19 @@
     - encrypted_variables.yml
 
   tasks:
-  - name: Install QEMU without GUI
+  - name: Install QEMU, arch-install-scripts and additional tools needed
     pacman:
       name:
         - qemu-headless
+        - arch-install-scripts
+        - parted
+
+  - name: Give gitlab-runner command access for tests
+    lineinfile:
+      path: /etc/sudoers.d/gitlab-runner
+      line: 'gitlab-runner ALL=(ALL) NOPASSWD: /usr/bin/losetup,/usr/bin/parted,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacstrap,/usr/bin/pacman'
+      create: yes
+      owner: root
+      group: root
+      mode: 0440
+
