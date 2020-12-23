@@ -18,6 +18,7 @@ conf = gl.settings.get()
 conf.auto_devops_enabled = False
 conf.first_day_of_week = 1
 conf.signup_enabled = False
+conf.max_artifacts_size = 3072
 conf.save()
 
 # Set default branch to the GitLab -specific one with the CI file
