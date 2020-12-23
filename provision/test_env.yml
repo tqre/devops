@@ -1,0 +1,12 @@
+- name: Test environment setup
+  hosts: gitlab
+  become: yes
+  become_method: sudo
+  vars_files:
+    - encrypted_variables.yml
+
+  tasks:
+  - name: Install QEMU without GUI
+    pacman:
+      name:
+        - qemu-headless
