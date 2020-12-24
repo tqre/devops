@@ -12,6 +12,14 @@
         - qemu-headless
         - arch-install-scripts
         - parted
+        - libvirt
+        - virt-manager
+
+  - name: Add gitlab-runner to libvirt group
+    user:
+      name: gitlab-runner
+      groups: libvirt
+      append: yes
 
   - name: Give gitlab-runner passwordless sudo access
     lineinfile:
@@ -21,3 +29,16 @@
       owner: root
       group: root
       mode: 0440
+
+  - name: Start libvirt service daemon
+    service:
+      name: libvirt
+      enabled: yes
+      state: started
+
+  - name: Start virtlogd service
+    service:
+      name: virtlogd
+      enabled: yes
+      state: started
+
