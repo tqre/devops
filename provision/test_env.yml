@@ -32,7 +32,7 @@
 
   - name: Start libvirt service daemon
     service:
-      name: libvirt
+      name: libvirtd
       enabled: yes
       state: started
 
