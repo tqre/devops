@@ -1,0 +1,7 @@
+[Unit]
+Description=Full system update & reboot
+
+[Service]
+Type=oneshot
+ExecStart=/bin/pacman -Syu --noconfirm
+ExecStartPost=/bin/reboot

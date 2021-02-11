@@ -13,6 +13,6 @@ windows:
 - window_name: gitlab
   layout: main-vertical
   panes:
-    -
-    -
-    -
+    - ssh gitlab.tqre.fi
+    - echo "watch 'sudo du /var/lib -d 1 2> /dev/null'"
+    - 
