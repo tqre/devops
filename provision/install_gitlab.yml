@@ -9,6 +9,7 @@
   - name: Install all needed packages
     pacman:
       name: 
+        - ruby2.7
         - postgresql
         - python-psycopg2
         - redis
@@ -18,6 +19,12 @@
         - gitlab-runner
         - python-gitlab
       state: latest
+
+  - name: Symlink ruby-2.7 to ruby
+    file:
+      src: /usr/bin/ruby-2.7
+      dest: /usr/bin/ruby
+      state: link
 
   - name: Initialize postgresql database cluster 
     command: initdb -D /var/lib/postgres/data -E UTF8
@@ -81,7 +88,7 @@
   - name: Upload redis configuration file
     copy:
       src: config_files/redis.conf
-      dest: /etc/redis.conf
+      dest: /etc/redis/redis.conf
 
   - name: Start and enable redis cache database service
     service:
