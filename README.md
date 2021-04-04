@@ -1,4 +1,5 @@
 # DevOps - GitLab server setup scripts
+**This branch uses Arch Linux's testing repositories**
 DevOps and DevSecOps study infrastructure setup scripts  
 
 ## Process
