@@ -16,7 +16,7 @@ DevOps and DevSecOps study infrastructure setup scripts
 - `$ ./generate_secrets.sh`
 
 5. Deploy VM instance to cloud with API
-- `$ python deploy/deploy_server.py`
+- `$ cd deploy; python deploy_server.py`
 
 6. Add DNS entries at your DNS service
 - edit provision/config_files/gitlab.yml to reflect the domain name
