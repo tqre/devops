@@ -6,7 +6,7 @@ DevOps and DevSecOps study infrastructure setup scripts
 1. Edit server resources in deploy/arch.json
 - location, title, hostname, CPU+RAM, HD
     
-2. Edit up deplyo/bootstrap.sh script
+2. Edit up deploy/bootstrap.sh script
 - SSH public key, hostname, partitioning, DNS servers
 
 3. Create secrets/cloud_creds -file for UpCloud API access
