@@ -35,12 +35,12 @@ EOF
 sfdisk /dev/vda < partition_map
 mkfs.vfat /dev/vda1
 mkswap /dev/vda2
-mkfs.ext4 /dev/vda3
-mkfs.ext4 /dev/vda4
-mkfs.ext4 /dev/vda5
-mkfs.ext4 /dev/vda6
-mkfs.ext4 /dev/vda7
-mkfs.ext4 /dev/vda8
+mkfs.xfs /dev/vda3
+mkfs.xfs /dev/vda4
+mkfs.xfs /dev/vda5
+mkfs.xfs /dev/vda6
+mkfs.xfs /dev/vda7
+mkfs.xfs /dev/vda8
 
 swapon /dev/vda2
 mount /dev/vda3 /mnt
