@@ -7,7 +7,7 @@ DevOps and DevSecOps study infrastructure setup scripts
 - location, title, hostname, CPU+RAM, HD
     
 2. Edit up deploy/bootstrap.sh script
-- SSH public key, hostname, partitioning, DNS servers
+- SSH public key, hostname, partitioning, DNS servers, mirrors
 
 3. Create secrets/cloud_creds -file for UpCloud API access
 - `$ echo -n "username:password" | base64 > secrets/cloud_creds`
