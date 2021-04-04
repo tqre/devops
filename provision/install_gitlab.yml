@@ -9,7 +9,6 @@
   - name: Install all needed packages
     pacman:
       name: 
-        - ruby2.7
         - postgresql
         - python-psycopg2
         - redis
@@ -19,12 +18,6 @@
         - gitlab-runner
         - python-gitlab
       state: latest
-
-  - name: Symlink ruby-2.7 to ruby
-    file:
-      src: /usr/bin/ruby-2.7
-      dest: /usr/bin/ruby
-      state: link
 
   - name: Initialize postgresql database cluster 
     command: initdb -D /var/lib/postgres/data -E UTF8
@@ -160,7 +153,7 @@
   - name: Initialize the GitLab database
     become_method: sudo
     become_user: gitlab
-    shell: env $(cat environment | xargs) bundle exec rake gitlab:setup force=yes GITLAB_ROOT_PASSWORD="{{ passwd_gitlab_admin }}"
+    shell: env $(cat environment | xargs) bundle-2.7 exec rake gitlab:setup force=yes GITLAB_ROOT_PASSWORD="{{ passwd_gitlab_admin }}"
     args:
       chdir: /usr/share/webapps/gitlab
       creates: /etc/webapps/gitlab/db_init_true
