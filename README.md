@@ -1,32 +1,36 @@
 # DevOps - GitLab server setup scripts
 DevOps and DevSecOps study infrastructure setup scripts  
 
-`secrets/cloud_creds` - Cloud API credentials in base64 encoding
-`deploy/bootstrap.sh' - SSH keypair's public part is needed here
-
 ## Process
 
-1. Create the needed secrets with te helper script
-- generate_secrets.sh
+1. Edit server resources in deploy/arch.json
+- location, title, hostname, CPU+RAM, HD
+    
+2. Edit up deplyo/bootstrap.sh script
+- SSH public key, hostname, partitioning, DNS servers
 
-2. Deploy VM instance to cloud with cloud-API scripts
-- deploy/deploy_server.py
+3. Create secrets/cloud_creds -file for UpCloud API access
+- `$ echo -n "username:password" | base64 > secrets/cloud_creds`
 
-3. DNS configuration via external services
-- TODO: centralize the configuration
+4. Run helper script to create needed secret strings
+- `$ ./generate_secrets.sh`
 
-4. Configure server and install GitLab using Ansible
+5. Deploy VM instance to cloud with API
+- `$ python deploy/deploy_server.py`
+
+6. Add DNS entries at your DNS service
+- edit provision/config_files/gitlab.yml to reflect the domain name
+
+7. Ansible-playbook: Set up firewall and other server configurations
 - provision/server_config.yml
+
+8. Install GitLab with Ansible
 - provision/install_gitlab.yml
 
-5. Configure GitLab further 
+9. Configure GitLab further 
 - Log in to GitLab instance web UI as root and acquire needed tokens (api + shared runner registration)
 - place them in secrets/ and encrypt them for ansible use
   - encrypt_tokens.sh
 - provision/configure_gitlab.yml
 - additional application settings with python-API
   - configure_gitlab.py
-
-6. Backups?
-- even though the server can be trashed and created anew within few minutes, backing up the content is essential
-
