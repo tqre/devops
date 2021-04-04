@@ -38,5 +38,17 @@
       src: config_files/bashrc
       dest: /home/tqre/.bashrc
 
+  - name: Set up daily update and reboot service
+    copy: src={{ item.src }} dest={{ item.dest }}
+    with_items:
+      - { src: 'config_files/system-update.service' , dest: '/etc/systemd/system/system-update.service' }
+      - { src: 'config_files/system-update.timer' , dest: '/etc/systemd/system/system-update.timer' }
+      
+  - name: Start update service timer
+    systemd:
+      name: system-update.timer
+      state: started
+      enabled: yes
+
   - name: Reboot the system
     reboot:
